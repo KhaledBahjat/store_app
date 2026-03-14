@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store_app/core/theme/app_colors.dart';
 import 'package:store_app/core/widgets/custom_search_feild.dart';
 import 'package:store_app/core/widgets/spacing_widget.dart';
+import 'package:store_app/features/auth/widgets/custom_text_button.dart';
 import 'package:store_app/features/home/ui/widgets/categoris_list.dart';
 
 class HomeView extends StatelessWidget {
@@ -41,7 +42,7 @@ class HomeView extends StatelessWidget {
                       ),
                       child: Image.network(
                         'https://images.pexels.com/photos/279906/pexels-photo-279906.jpeg',
-                        height: 300.h,
+                        height: 200.h,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -68,6 +69,76 @@ class HomeView extends StatelessWidget {
                       ),
                     ),
                   ],
+                ),
+
+                heightSp(height: 10),
+
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Product Name',
+                            style: TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.favorite,
+                              color: AppColors.kGreyColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [
+                              Text(
+                                '\$99.99 LE',
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  color: AppColors.kPrimaryColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(width: 10.w),
+                              Text(
+                                '\$199.99 LE',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  color: AppColors.kGreyColor,
+                                  decoration: TextDecoration.lineThrough,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.kPrimaryColor,
+                              foregroundColor: AppColors.kWhiteColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.r),
+                              ),
+                            ),
+                            child: Text(
+                              'Buy Now',
+                              style: TextStyle(fontSize: 16.sp),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
