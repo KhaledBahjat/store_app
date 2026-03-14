@@ -23,12 +23,57 @@ class HomeView extends StatelessWidget {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           heightSp(height: 15),
-          SizedBox(
-            child: CategoriseList(),
+          CategoriseList(),
+          heightSp(height: 15),
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16.r)),
+            ),
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(16.r),
+                        bottomRight: Radius.circular(16.r),
+                        bottomLeft: Radius.circular(16.r),
+                      ),
+                      child: Image.network(
+                        'https://images.pexels.com/photos/279906/pexels-photo-279906.jpeg',
+                        height: 200,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Positioned(
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: 65.w,
+                        height: 35.h,
+                        decoration: BoxDecoration(
+                          color: AppColors.kPrimaryColor.withOpacity(0.7),
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(16.r),
+                            bottomRight: Radius.circular(16.r),
+                          ),
+                        ),
+                        child: Text(
+                          '50% Off',
+                          style: TextStyle(
+                            color: AppColors.kWhiteColor,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),
     );
   }
 }
-
