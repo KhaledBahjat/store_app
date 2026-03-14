@@ -41,7 +41,7 @@ class HomeView extends StatelessWidget {
                       ),
                       child: Image.network(
                         'https://images.pexels.com/photos/279906/pexels-photo-279906.jpeg',
-                        height: 200,
+                        height: 300.h,
                         fit: BoxFit.cover,
                       ),
                     ),
