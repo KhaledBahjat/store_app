@@ -3,6 +3,7 @@ import 'package:store_app/core/routing/app_routs.dart';
 import 'package:store_app/features/auth/sign_in.dart';
 import 'package:store_app/features/auth/sign_up.dart';
 import 'package:store_app/features/auth/widgets/forget_password_widget.dart';
+import 'package:store_app/features/nav_bar/ui/main_home_view.dart';
 
 class RouterGeneratour {
   static GoRouter goRouter = GoRouter(
@@ -21,6 +22,11 @@ class RouterGeneratour {
         path: AppRouts.registerScreen,
         builder: (context, state) => const SignUp(),
         name: AppRouts.registerScreen,
+      ),
+      GoRoute(
+        path: AppRouts.mainHomeScreen,
+        builder: (context, state) => MainHomeView(),
+        name: AppRouts.mainHomeScreen,
       ),
     ],
     initialLocation: AppRouts.loginScreen,

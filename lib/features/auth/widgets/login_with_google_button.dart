@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:store_app/core/routing/app_routs.dart';
 import 'package:store_app/core/theme/app_colors.dart';
 
 class LoginWithGoogleButton extends StatelessWidget {
-  const LoginWithGoogleButton({
-    super.key,
-  });
+  const LoginWithGoogleButton({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
       height: 40.h,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.r),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
       textColor: Colors.white,
       color: AppColors.kPrimaryColor.withAlpha(200),
-      onPressed: () {},
+      onPressed: () => GoRouter.of(context).pushNamed(AppRouts.mainHomeScreen),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
