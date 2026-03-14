@@ -18,7 +18,7 @@ class LoginWithGoogleButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset('assets/google.png', height: 20.h),
+          Image.asset('assets/images/google.png', height: 20.h),
           SizedBox(width: 10.w),
           Text('Continue with Google'),
         ],
