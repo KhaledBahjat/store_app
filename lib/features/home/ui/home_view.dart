@@ -1,9 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store_app/core/theme/app_colors.dart';
+import 'package:store_app/core/widgets/cach_image.dart';
 import 'package:store_app/core/widgets/custom_search_feild.dart';
 import 'package:store_app/core/widgets/spacing_widget.dart';
-import 'package:store_app/features/auth/widgets/custom_text_button.dart';
 import 'package:store_app/features/home/ui/widgets/categoris_list.dart';
 
 class HomeView extends StatelessWidget {
@@ -40,10 +41,9 @@ class HomeView extends StatelessWidget {
                         bottomRight: Radius.circular(16.r),
                         bottomLeft: Radius.circular(16.r),
                       ),
-                      child: Image.network(
-                        'https://images.pexels.com/photos/279906/pexels-photo-279906.jpeg',
-                        height: 200.h,
-                        fit: BoxFit.cover,
+                      child: CachImage(
+                        imageUrl:
+                            'https://images.pexels.com/photos/279906/pexels-photo-279906.jpeg',
                       ),
                     ),
                     Positioned(
