@@ -53,6 +53,6 @@ class RouterGeneratour {
         name: AppRouts.favoriteviewScreen,
       ),
     ],
-    initialLocation: AppRouts.loginScreen,
+    initialLocation: AppRouts.mainHomeScreen,
   );
 }
