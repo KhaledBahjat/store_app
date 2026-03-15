@@ -59,6 +59,6 @@ class RouterGeneratour {
         name: AppRouts.proudctDetailsView,
       ),
     ],
-    initialLocation: AppRouts.mainHomeScreen,
+    initialLocation: AppRouts.loginScreen,
   );
 }
