@@ -62,7 +62,7 @@ class MyOrdersWidget extends StatelessWidget {
                   ? const _EmptyOrdersState()
                   : ListView.separated(
                       itemCount: _orders.length,
-                      separatorBuilder: (_, __) => const SizedBox(height: 10),
+                      separatorBuilder: (_, _) => const SizedBox(height: 10),
                       itemBuilder: (context, index) {
                         final order = _orders[index];
                         return _OrderCard(order: order);
