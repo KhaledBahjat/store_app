@@ -41,3 +41,11 @@ final class SignOutFailure extends AuthCubitState {
 
   SignOutFailure({required this.errorMessage});
 }
+
+final class PasswordResetEmailSuccess extends AuthCubitState {}
+final class PasswordResetEmailLoading extends AuthCubitState {}
+final class PasswordResetEmailFailure extends AuthCubitState {
+  final String errorMessage;
+
+  PasswordResetEmailFailure({required this.errorMessage});
+}

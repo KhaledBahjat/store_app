@@ -85,4 +85,18 @@ class AuthCubitCubit extends Cubit<AuthCubitState> {
       emit(SignOutFailure(errorMessage: 'An error occurred while signing out'));
     }
   }
+
+
+  Future<void> sendPasswordResetEmail({required String email}) async {
+    emit(PasswordResetEmailLoading());
+    try {
+      await clint.auth.resetPasswordForEmail(email);
+      emit(PasswordResetEmailSuccess());
+    } on AuthException catch (e) {
+      emit(PasswordResetEmailFailure(errorMessage: e.message));
+    } catch (e) {
+      emit(PasswordResetEmailFailure(
+          errorMessage: 'An error occurred while sending password reset email'));
+    }
+  }
 }
