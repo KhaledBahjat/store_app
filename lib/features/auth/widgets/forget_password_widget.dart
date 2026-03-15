@@ -132,4 +132,10 @@ class _ForgetPasswordWidgetState extends State<ForgetPasswordWidget> {
       },
     );
   }
+  @override
+  void didChangeDependencies() {
+    _emailController.dispose();
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
 }
