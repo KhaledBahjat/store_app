@@ -33,12 +33,16 @@ class _SignInState extends State<SignIn> {
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubitCubit, AuthCubitState>(
       listener: (context, state) {
-        if (state is SignInFailure) {
-          showMessage(context, state.errorMessage);
-        } else if (state is SignInSuccess) {
+        if (state is SignInFailure || state is GoogleSignInFailure) {
+           final errorMessage = state is SignInFailure
+              ? state.errorMessage
+              : (state as GoogleSignInFailure).errorMessage;
+          showMessage(context, errorMessage);
+        } else if (state is SignInSuccess||state is GoogleSignInSuccess) {
           context.push(AppRouts.mainHomeScreen);
         }
       },
@@ -48,7 +52,7 @@ class _SignInState extends State<SignIn> {
           key: formKey,
           child: Scaffold(
             backgroundColor: AppColors.kScaffoldColor,
-            body: state is SignInLoading
+            body: state is SignInLoading || state is GoogleSignInLoading
                 ? Center(
                     child: CircularProgressIndicator(
                       color: AppColors.kPrimaryColor,
@@ -126,7 +130,9 @@ class _SignInState extends State<SignIn> {
                                 ),
                                 heightSp(height: 16),
                                 // TODO: add sign in with google
-                                LoginWithGoogleButton(),
+                                LoginWithGoogleButton(
+                                  onPressed: () => authCubit.signInWithGoogle(),
+                                ),
                                 heightSp(height: 16),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,

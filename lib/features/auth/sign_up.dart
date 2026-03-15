@@ -29,6 +29,9 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubitCubit, AuthCubitState>(
       listener: (context, state) {
+        if (state is GoogleSignInSuccess) {
+          context.go(AppRouts.mainHomeScreen);
+        }
         if (state is SignUpSuccess) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             showMessage(
@@ -41,14 +44,17 @@ class _SignUpState extends State<SignUp> {
       },
       builder: (context, state) {
         AuthCubitCubit authCubit = context.read<AuthCubitCubit>();
-        if (state is SignUpFailure) {
+        if (state is SignUpFailure || state is GoogleSignInFailure) {
+           final errorMessage = state is SignUpFailure
+              ? state.errorMessage
+              : (state as GoogleSignInFailure).errorMessage;
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            showMessage(context, state.errorMessage);
+            showMessage(context, errorMessage);
           });
         }
         return Scaffold(
           backgroundColor: AppColors.kScaffoldColor,
-          body: state is SignUpLoading
+          body: state is SignUpLoading || state is GoogleSignInLoading
               ? const Center(
                   child: CircularProgressIndicator(
                     color: AppColors.kPrimaryColor,
@@ -122,7 +128,10 @@ class _SignUpState extends State<SignUp> {
                                     },
                                   ),
                                   heightSp(height: 16),
-                                  const LoginWithGoogleButton(),
+                                  LoginWithGoogleButton(
+                                    onPressed: () =>
+                                        authCubit.signInWithGoogle(),
+                                  ),
                                   heightSp(height: 16),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
