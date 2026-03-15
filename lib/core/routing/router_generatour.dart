@@ -9,6 +9,7 @@ import 'package:store_app/features/nav_bar/ui/main_home_view.dart';
 import 'package:store_app/features/pofile/ui/profile_view.dart';
 import 'package:store_app/features/proudct_details/ui/proudct_details_view.dart';
 import 'package:store_app/features/store/ui/store_view.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class RouterGeneratour {
   static GoRouter goRouter = GoRouter(
@@ -59,6 +60,6 @@ class RouterGeneratour {
         name: AppRouts.proudctDetailsView,
       ),
     ],
-    initialLocation: AppRouts.loginScreen,
+    initialLocation:Supabase.instance.client.auth.currentUser!=null ? AppRouts.mainHomeScreen : AppRouts.loginScreen,
   );
 }
