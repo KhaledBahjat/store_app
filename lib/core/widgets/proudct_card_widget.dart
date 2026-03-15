@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:store_app/core/routing/app_routs.dart';
 import 'package:store_app/core/theme/app_colors.dart';
 import 'package:store_app/core/widgets/cach_image.dart';
 import 'package:store_app/core/widgets/spacing_widget.dart';
@@ -101,7 +103,9 @@ class ProudctCard extends StatelessWidget {
                     ),
                     Spacer(),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.push(AppRouts.proudctDetailsView);
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.kPrimaryColor,
                         foregroundColor: AppColors.kWhiteColor,

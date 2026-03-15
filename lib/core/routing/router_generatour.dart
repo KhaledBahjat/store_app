@@ -7,6 +7,7 @@ import 'package:store_app/features/favorite/ui/favorite_view.dart';
 import 'package:store_app/features/home/ui/home_view.dart';
 import 'package:store_app/features/nav_bar/ui/main_home_view.dart';
 import 'package:store_app/features/pofile/ui/profile_view.dart';
+import 'package:store_app/features/proudct_details/ui/proudct_details_view.dart';
 import 'package:store_app/features/store/ui/store_view.dart';
 
 class RouterGeneratour {
@@ -51,6 +52,11 @@ class RouterGeneratour {
         path: AppRouts.favoriteviewScreen,
         builder: (context, state) => const FavoriteView(),
         name: AppRouts.favoriteviewScreen,
+      ),
+      GoRoute(
+        path: AppRouts.proudctDetailsView,
+        builder: (context, state) => const ProudctDetailsView(),
+        name: AppRouts.proudctDetailsView,
       ),
     ],
     initialLocation: AppRouts.mainHomeScreen,

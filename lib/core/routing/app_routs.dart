@@ -7,4 +7,5 @@ class AppRouts {
   static const String profileviewScreen = '/profileviewScreen';
   static const String storeviewScreen = '/storeviewScreen';
   static const String favoriteviewScreen = '/favoriteviewScreen';
+  static const String proudctDetailsView = '/proudctDetailsView';
 }

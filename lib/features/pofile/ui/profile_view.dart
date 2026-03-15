@@ -52,7 +52,7 @@ class _ProfileViewState extends State<ProfileView> {
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        height: MediaQuery.sizeOf(context).height * .55,
+        height: MediaQuery.sizeOf(context).height * .60,
         child: Card(
           color: AppColors.kWhiteColor,
           margin: EdgeInsets.all(24),
