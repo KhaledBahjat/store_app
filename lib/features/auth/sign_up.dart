@@ -29,9 +29,6 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubitCubit, AuthCubitState>(
       listener: (context, state) {
-        if (state is GoogleSignInSuccess) {
-          context.go(AppRouts.mainHomeScreen);
-        }
         if (state is SignUpSuccess) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             showMessage(
@@ -44,17 +41,14 @@ class _SignUpState extends State<SignUp> {
       },
       builder: (context, state) {
         AuthCubitCubit authCubit = context.read<AuthCubitCubit>();
-        if (state is SignUpFailure || state is GoogleSignInFailure) {
-           final errorMessage = state is SignUpFailure
-              ? state.errorMessage
-              : (state as GoogleSignInFailure).errorMessage;
+        if (state is SignUpFailure) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            showMessage(context, errorMessage);
+            showMessage(context,state.errorMessage);
           });
         }
         return Scaffold(
           backgroundColor: AppColors.kScaffoldColor,
-          body: state is SignUpLoading || state is GoogleSignInLoading
+          body: state is SignUpLoading
               ? const Center(
                   child: CircularProgressIndicator(
                     color: AppColors.kPrimaryColor,
@@ -126,11 +120,6 @@ class _SignUpState extends State<SignUp> {
                                         );
                                       }
                                     },
-                                  ),
-                                  heightSp(height: 16),
-                                  LoginWithGoogleButton(
-                                    onPressed: () =>
-                                        authCubit.signInWithGoogle(),
                                   ),
                                   heightSp(height: 16),
                                   Row(
