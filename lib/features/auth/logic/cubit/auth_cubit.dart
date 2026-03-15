@@ -71,4 +71,18 @@ class AuthCubitCubit extends Cubit<AuthCubitState> {
       emit(GoogleSignInFailure(errorMessage: e.toString()));
     }
   }
+
+
+  Future<void> signOut() async {
+    emit(SignOutLoading());
+    try {
+      await clint.auth.signOut();
+      await googleSignIn.signOut();
+      emit(SignOutSuccess());
+    } on AuthException catch (e) {
+      emit(SignOutFailure(errorMessage: e.message));
+    } catch (e) {
+      emit(SignOutFailure(errorMessage: 'An error occurred while signing out'));
+    }
+  }
 }

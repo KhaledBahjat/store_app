@@ -33,3 +33,11 @@ final class GoogleSignInFailure extends AuthCubitState {
   GoogleSignInFailure({required this.errorMessage});
 
 }
+
+final class SignOutSuccess extends AuthCubitState {}
+final class SignOutLoading extends AuthCubitState {}
+final class SignOutFailure extends AuthCubitState {
+  final String errorMessage;
+
+  SignOutFailure({required this.errorMessage});
+}
