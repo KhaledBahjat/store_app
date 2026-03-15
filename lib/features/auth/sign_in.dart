@@ -23,6 +23,9 @@ class _SignInState extends State<SignIn> {
 
   TextEditingController passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  bool isPassword = true;
+
+  @override
   @override
   dispose() {
     emailController.dispose();
@@ -81,8 +84,16 @@ class _SignInState extends State<SignIn> {
                                   labelText: 'Password',
                                   controller: passwordController,
                                   suffixIcon: IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(Icons.visibility_off),
+                                    onPressed: () {
+                                      setState(() {
+                                        isPassword = !isPassword;
+                                      });
+                                    },
+                                    icon: Icon(
+                                      isPassword
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                    ),
                                   ),
                                   isPassword: true,
                                 ),
@@ -141,5 +152,4 @@ class _SignInState extends State<SignIn> {
       },
     );
   }
-
 }
