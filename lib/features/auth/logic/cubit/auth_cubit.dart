@@ -10,19 +10,34 @@ class AuthCubitCubit extends Cubit<AuthCubitState> {
   Future<void> signIn({required String email, required String password}) async {
     emit(SignInLoading());
     try {
-      final response = await clint.auth.signInWithPassword(
+      await clint.auth.signInWithPassword(
         email: email,
         password: password,
       );
-      if (response.session != null) {
-        emit(SignInSuccess());
-      } else {
-        emit(SignInFailure(errorMessage: 'Failed to sign in'));
-      }
+      emit(SignInSuccess());
     } on AuthException catch (e) {
       emit(SignInFailure(errorMessage: e.message));
     } catch (e) {
       emit(SignInFailure(errorMessage: 'An error occurred while signing in'));
+    }
+  }
+
+  Future<void> signUp({required String name,required String email, required String password}) async {
+    emit(SignUpLoading());
+    try {
+       await clint.auth.signUp(
+        email: email,
+        password: password,
+        data: {
+          'name': name,
+        }
+      );
+      emit(SignUpSuccess());
+    
+    } on AuthException catch (e) {
+      emit(SignUpFailure(errorMessage: e.message));
+    } catch (e) {
+      emit(SignUpFailure(errorMessage: 'An error occurred while signing up'));
     }
   }
 }
