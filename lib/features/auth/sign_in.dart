@@ -38,11 +38,11 @@ class _SignInState extends State<SignIn> {
     return BlocConsumer<AuthCubitCubit, AuthCubitState>(
       listener: (context, state) {
         if (state is SignInFailure || state is GoogleSignInFailure) {
-           final errorMessage = state is SignInFailure
+          final errorMessage = state is SignInFailure
               ? state.errorMessage
               : (state as GoogleSignInFailure).errorMessage;
           showMessage(context, errorMessage);
-        } else if (state is SignInSuccess||state is GoogleSignInSuccess) {
+        } else if (state is SignInSuccess || state is GoogleSignInSuccess) {
           context.push(AppRouts.mainHomeScreen);
         }
       },
@@ -58,99 +58,104 @@ class _SignInState extends State<SignIn> {
                       color: AppColors.kPrimaryColor,
                     ),
                   )
-                : SafeArea(
-                    child: Column(
-                      children: [
-                        Text(
-                          'Welcome To Our Market',
-                          style: TextStyle(
-                            fontSize: 24.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        heightSp(height: 20),
-                        Card(
-                          color: AppColors.kWhiteColor,
-                          margin: EdgeInsets.all(24),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(16)),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.all(16),
-                            child: Column(
-                              children: [
-                                CustomTextFormFeild(
-                                  labelText: 'Email',
-                                  controller: emailController,
-                                ),
-                                heightSp(height: 16),
-                                CustomTextFormFeild(
-                                  labelText: 'Password',
-                                  controller: passwordController,
-                                  suffixIcon: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        isPassword = !isPassword;
-                                      });
-                                    },
-                                    icon: Icon(
-                                      isPassword
-                                          ? Icons.visibility_off
-                                          : Icons.visibility,
-                                    ),
-                                  ),
-                                  isPassword: true,
-                                ),
-                                heightSp(height: 20),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    CustomTextButton(
-                                      text: 'Forgot Password?',
-                                      onPressed: () {
-                                        context.push(
-                                          AppRouts.forgetPasswordScreen,
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
-
-                                heightSp(height: 20),
-                                SignInAndSignUpButton(
-                                  text: 'Sign In',
-                                  onPressed: () {
-                                    if (formKey.currentState!.validate()) {
-                                      authCubit.signIn(
-                                        email: emailController.text,
-                                        password: passwordController.text,
-                                      );
-                                    }
-                                  },
-                                ),
-                                heightSp(height: 16),
-                                // TODO: add sign in with google
-                                LoginWithGoogleButton(
-                                  onPressed: () => authCubit.signInWithGoogle(),
-                                ),
-                                heightSp(height: 16),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text('Don\'t have an account?'),
-                                    CustomTextButton(
-                                      text: 'Sign Up',
-                                      onPressed: () {
-                                        context.push(AppRouts.registerScreen);
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ],
+                : SingleChildScrollView(
+                    child: SafeArea(
+                      child: Column(
+                        children: [
+                          Text(
+                            'Welcome To Our Market',
+                            style: TextStyle(
+                              fontSize: 24.sp,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ),
-                      ],
+                          heightSp(height: 20),
+                          Card(
+                            color: AppColors.kWhiteColor,
+                            margin: EdgeInsets.all(24),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(16),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(16),
+                              child: Column(
+                                children: [
+                                  CustomTextFormFeild(
+                                    labelText: 'Email',
+                                    controller: emailController,
+                                  ),
+                                  heightSp(height: 16),
+                                  CustomTextFormFeild(
+                                    labelText: 'Password',
+                                    controller: passwordController,
+                                    suffixIcon: IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          isPassword = !isPassword;
+                                        });
+                                      },
+                                      icon: Icon(
+                                        isPassword
+                                            ? Icons.visibility_off
+                                            : Icons.visibility,
+                                      ),
+                                    ),
+                                    isPassword: true,
+                                  ),
+                                  heightSp(height: 20),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      CustomTextButton(
+                                        text: 'Forgot Password?',
+                                        onPressed: () {
+                                          context.push(
+                                            AppRouts.forgetPasswordScreen,
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+
+                                  heightSp(height: 20),
+                                  SignInAndSignUpButton(
+                                    text: 'Sign In',
+                                    onPressed: () {
+                                      if (formKey.currentState!.validate()) {
+                                        authCubit.signIn(
+                                          email: emailController.text,
+                                          password: passwordController.text,
+                                        );
+                                      }
+                                    },
+                                  ),
+                                  heightSp(height: 16),
+                                  // TODO: add sign in with google
+                                  LoginWithGoogleButton(
+                                    onPressed: () =>
+                                        authCubit.signInWithGoogle(),
+                                  ),
+                                  heightSp(height: 16),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text('Don\'t have an account?'),
+                                      CustomTextButton(
+                                        text: 'Sign Up',
+                                        onPressed: () {
+                                          context.push(AppRouts.registerScreen);
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
           ),

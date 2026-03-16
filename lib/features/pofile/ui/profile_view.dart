@@ -9,7 +9,6 @@ import 'package:store_app/features/auth/logic/cubit/auth_cubit.dart';
 import 'package:store_app/features/auth/logic/model/users_model.dart';
 import 'package:store_app/features/pofile/widgets/edit_name_widget.dart';
 import 'package:store_app/features/pofile/widgets/my_orders_widget.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -56,91 +55,97 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthCubitCubit, AuthCubitState>(
-      listener: (context, state) {
-        if (state is SignOutSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Signed out successfully')),
-          );
-          context.pushReplacementNamed(AppRouts.loginScreen);
-        } else if (state is SignOutFailure) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
-        }
-        if (state is SignOutFailure) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
-        }
-      },
-      builder: (context, state) {
-        UsersModel? userData = context.read<AuthCubitCubit>().userData;
-        return state is SignOutLoading
-            ? Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.kPrimaryColor,
-                ),
-              )
-            : Center(
-                child: SizedBox(
-                  height: MediaQuery.sizeOf(context).height * .60,
-                  child: Card(
-                    color: AppColors.kWhiteColor,
-                    margin: EdgeInsets.all(24),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(16)),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Column(
-                        children: [
-                          CircleAvatar(
-                            radius: 50,
-                            backgroundColor: AppColors.kPrimaryColor,
-                            foregroundColor: AppColors.kWhiteColor,
-                            child: Icon(Icons.person, size: 50),
-                          ),
-                          heightSp(height: 16),
-                          Text(
-                            userData?.name ?? _profileName,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+    return BlocProvider(
+      create: (context) => AuthCubitCubit()..getUserData(),
+      child: BlocConsumer<AuthCubitCubit, AuthCubitState>(
+        listener: (context, state) {
+          if (state is SignOutSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Signed out successfully')),
+            );
+            context.pushReplacementNamed(AppRouts.loginScreen);
+          } else if (state is SignOutFailure) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
+          }
+          if (state is SignOutFailure) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
+          }
+        },
+        builder: (context, state) {
+          UsersModel? userData = context.read<AuthCubitCubit>().userData;
+          return state is SignOutLoading || state is GetUserDataLoading
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.kPrimaryColor,
+                  ),
+                )
+              : Center(
+                  child: SizedBox(
+                    height: MediaQuery.sizeOf(context).height * .60,
+                    child: Card(
+                      color: AppColors.kWhiteColor,
+                      margin: EdgeInsets.all(24),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16)),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(16),
+                        child: Column(
+                          children: [
+                            CircleAvatar(
+                              radius: 50,
+                              backgroundColor: AppColors.kPrimaryColor,
+                              foregroundColor: AppColors.kWhiteColor,
+                              child: Icon(Icons.person, size: 50),
                             ),
-                          ),
-                          heightSp(height: 8),
-                          Text(
-                            userData?.email ?? 'john.doe@example.com',
-                            style: TextStyle(fontSize: 16, color: Colors.grey),
-                          ),
-                          heightSp(height: 16),
-                          CustomRowButton(
-                            icon: Icons.person,
-                            text: 'Edit Name',
-                            onTap: _openEditNameDialog,
-                          ),
-                          heightSp(height: 8),
-                          CustomRowButton(
-                            icon: Icons.shopping_cart,
-                            text: 'My Orders',
-                            onTap: _openMyOrdersSheet,
-                          ),
-                          heightSp(height: 8),
-                          CustomRowButton(
-                            icon: Icons.logout,
-                            text: 'Logout',
-                            onTap: () async {
-                              await context.read<AuthCubitCubit>().signOut();
-                            },
-                          ),
-                        ],
+                            heightSp(height: 16),
+                            Text(
+                              userData?.name ?? 'Name',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            heightSp(height: 8),
+                            Text(
+                              userData?.email ?? 'Email',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            heightSp(height: 16),
+                            CustomRowButton(
+                              icon: Icons.person,
+                              text: 'Edit Name',
+                              onTap: _openEditNameDialog,
+                            ),
+                            heightSp(height: 8),
+                            CustomRowButton(
+                              icon: Icons.shopping_cart,
+                              text: 'My Orders',
+                              onTap: _openMyOrdersSheet,
+                            ),
+                            heightSp(height: 8),
+                            CustomRowButton(
+                              icon: Icons.logout,
+                              text: 'Logout',
+                              onTap: () async {
+                                await context.read<AuthCubitCubit>().signOut();
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              );
-      },
+                );
+        },
+      ),
     );
   }
 }
