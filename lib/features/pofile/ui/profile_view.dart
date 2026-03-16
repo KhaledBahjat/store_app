@@ -6,6 +6,7 @@ import 'package:store_app/core/theme/app_colors.dart';
 import 'package:store_app/core/widgets/custom_row_button.dart';
 import 'package:store_app/core/widgets/spacing_widget.dart';
 import 'package:store_app/features/auth/logic/cubit/auth_cubit.dart';
+import 'package:store_app/features/auth/logic/model/users_model.dart';
 import 'package:store_app/features/pofile/widgets/edit_name_widget.dart';
 import 'package:store_app/features/pofile/widgets/my_orders_widget.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -74,6 +75,7 @@ class _ProfileViewState extends State<ProfileView> {
         }
       },
       builder: (context, state) {
+        UsersModel? userData = context.read<AuthCubitCubit>().userData;
         return state is SignOutLoading
             ? Center(
                 child: CircularProgressIndicator(
@@ -101,7 +103,7 @@ class _ProfileViewState extends State<ProfileView> {
                           ),
                           heightSp(height: 16),
                           Text(
-                            _profileName,
+                            userData?.name ?? _profileName,
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -109,7 +111,7 @@ class _ProfileViewState extends State<ProfileView> {
                           ),
                           heightSp(height: 8),
                           Text(
-                            'john.doe@example.com',
+                            userData?.email ?? 'john.doe@example.com',
                             style: TextStyle(fontSize: 16, color: Colors.grey),
                           ),
                           heightSp(height: 16),

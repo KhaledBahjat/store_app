@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:meta/meta.dart';
+import 'package:store_app/features/auth/logic/model/users_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'auth_state.dart';
@@ -34,10 +35,11 @@ class AuthCubitCubit extends Cubit<AuthCubitState> {
       await clint.auth.signUp(email: email, password: password);
 
       await addUserData(email: email, name: name);
-
+      await getUserData();
       await clint.auth.signOut();
 
       emit(SignUpSuccess());
+      await getUserData();
     } on AuthException catch (e) {
       emit(SignUpFailure(errorMessage: e.message));
     } catch (e) {
@@ -70,6 +72,7 @@ class AuthCubitCubit extends Cubit<AuthCubitState> {
         accessToken: authorization.accessToken,
       );
       await addUserData(email: googleUser.email, name: googleUser.displayName!);
+      await getUserData();
       emit(GoogleSignInSuccess());
     } on Exception catch (e) {
       emit(GoogleSignInFailure(errorMessage: e.toString()));
@@ -124,6 +127,27 @@ class AuthCubitCubit extends Cubit<AuthCubitState> {
       emit(
         AddedUserDataFailure(
           errorMessage: 'An error occurred while adding user data',
+        ),
+      );
+    }
+  }
+
+  UsersModel? userData;
+  Future<void> getUserData() async {
+    emit(GetUserDataLoading());
+    try {
+      final jsonData = await clint
+          .from('users')
+          .select()
+          .eq('id', clint.auth.currentUser!.id);
+      log(jsonData.toString());
+      userData = UsersModel.fromJson(jsonData[0]);
+      emit(GetUserDataSuccess());
+    } catch (e) {
+      log(e.toString());
+      emit(
+        GetUserDataFailure(
+          errorMessage: 'An error occurred while getting user data',
         ),
       );
     }

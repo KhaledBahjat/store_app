@@ -58,3 +58,14 @@ final class AddedUserDataFailure extends AuthCubitState {
 
   AddedUserDataFailure({required this.errorMessage});
 }
+
+
+final class GetUserDataLoading extends AuthCubitState {}
+final class GetUserDataFailure extends AuthCubitState {
+  final String errorMessage;
+
+  GetUserDataFailure({required this.errorMessage});
+}
+
+final class GetUserDataSuccess extends AuthCubitState {
+}
