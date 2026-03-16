@@ -42,9 +42,7 @@ class _SignUpState extends State<SignUp> {
       builder: (context, state) {
         AuthCubitCubit authCubit = context.read<AuthCubitCubit>();
         if (state is SignUpFailure) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            showMessage(context,state.errorMessage);
-          });
+          showMessage(context, state.errorMessage);
         }
         return Scaffold(
           backgroundColor: AppColors.kScaffoldColor,

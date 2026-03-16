@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:meta/meta.dart';
@@ -29,11 +31,12 @@ class AuthCubitCubit extends Cubit<AuthCubitState> {
   }) async {
     emit(SignUpLoading());
     try {
-      await clint.auth.signUp(
-        email: email,
-        password: password,
-        data: {'name': name},
-      );
+      await clint.auth.signUp(email: email, password: password);
+
+      await addUserData(email: email, name: name);
+
+      await clint.auth.signOut();
+
       emit(SignUpSuccess());
     } on AuthException catch (e) {
       emit(SignUpFailure(errorMessage: e.message));
@@ -66,12 +69,12 @@ class AuthCubitCubit extends Cubit<AuthCubitState> {
         idToken: idToken,
         accessToken: authorization.accessToken,
       );
+      await addUserData(email: googleUser.email, name: googleUser.displayName!);
       emit(GoogleSignInSuccess());
     } on Exception catch (e) {
       emit(GoogleSignInFailure(errorMessage: e.toString()));
     }
   }
-
 
   Future<void> signOut() async {
     emit(SignOutLoading());
@@ -86,7 +89,6 @@ class AuthCubitCubit extends Cubit<AuthCubitState> {
     }
   }
 
-
   Future<void> sendPasswordResetEmail({required String email}) async {
     emit(PasswordResetEmailLoading());
     try {
@@ -95,8 +97,35 @@ class AuthCubitCubit extends Cubit<AuthCubitState> {
     } on AuthException catch (e) {
       emit(PasswordResetEmailFailure(errorMessage: e.message));
     } catch (e) {
-      emit(PasswordResetEmailFailure(
-          errorMessage: 'An error occurred while sending password reset email'));
+      emit(
+        PasswordResetEmailFailure(
+          errorMessage: 'An error occurred while sending password reset email',
+        ),
+      );
+    }
+  }
+
+  Future<void> addUserData({
+    required String email,
+    required String name,
+  }) async {
+    emit(AddedUserDataLoading());
+    try {
+      await clint.from('users').upsert({
+        'name': name,
+        'email': email,
+        'id': clint.auth.currentUser!.id,
+      });
+      emit(AddedUserDataSuccess());
+    } on AuthException catch (e) {
+      emit(AddedUserDataFailure(errorMessage: e.message));
+    } catch (e) {
+      log(e.toString());
+      emit(
+        AddedUserDataFailure(
+          errorMessage: 'An error occurred while adding user data',
+        ),
+      );
     }
   }
 }

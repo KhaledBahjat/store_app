@@ -49,3 +49,12 @@ final class PasswordResetEmailFailure extends AuthCubitState {
 
   PasswordResetEmailFailure({required this.errorMessage});
 }
+
+
+final class AddedUserDataSuccess extends AuthCubitState {}
+final class AddedUserDataLoading extends AuthCubitState {}
+final class AddedUserDataFailure extends AuthCubitState {
+  final String errorMessage;
+
+  AddedUserDataFailure({required this.errorMessage});
+}
