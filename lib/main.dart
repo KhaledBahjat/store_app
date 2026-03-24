@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store_app/core/functions/observer.dart';
 import 'package:store_app/core/routing/router_generatour.dart';
+import 'package:store_app/core/sensetive_data.dart';
 import 'package:store_app/features/auth/logic/cubit/auth_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -10,8 +11,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
     url: 'https://xtmhgoctgsnltpyrjyvm.supabase.co',
-    anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0bWhnb2N0Z3NubHRweXJqeXZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1NTY1ODIsImV4cCI6MjA4OTEzMjU4Mn0.V6Up4nx_GJK_6tqpxqZXrkQhj60oIeLxcPVJM8srdCQ',
+    anonKey: apiKey,
   );
   Bloc.observer = MyObserver();
   runApp(const MarketApp());
@@ -19,7 +19,6 @@ Future<void> main() async {
 
 class MarketApp extends StatelessWidget {
   const MarketApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
